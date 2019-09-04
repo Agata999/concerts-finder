@@ -4,7 +4,7 @@ from django.db import models
 class Person(models.Model):
     first_name = models.CharField(max_length=64)
     last_name = models.CharField(max_length=64)
-    artistic_name = models.CharField(max_length=64, null=True, blank=True, unique=True)
+    artistic_name = models.CharField(max_length=64, null=True, blank=True)
 
     @property
     def name(self):
@@ -57,7 +57,7 @@ class RealConcert(models.Model):
     place = models.CharField(max_length=128)
     city = models.ForeignKey(ConcertCity, on_delete=models.PROTECT, related_name='real_concerts')
     description = models.TextField(null=True, blank=True)
-    facebook_page = models.URLField(max_length=128, null=True, blank=True)
+    facebook_page = models.URLField(max_length=250, null=True, blank=True)
     likes = models.ManyToManyField('auth.User', related_name='real_concerts_likes')
 
     def __str__(self):

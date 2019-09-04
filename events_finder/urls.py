@@ -15,7 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from concerts.views import LoadingPage
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('main/', LoadingPage.as_view(), name='loading-page')
+
 ]
