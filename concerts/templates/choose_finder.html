@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>
+<center>
+    <div class="p-3 mb-2 bg-secondary text-black">ZNAJDŹ KONCERT</div>
+</center>
+</h1>
+<p>
+    <a class="btn btn-secondary btn-lg btn-block" href="#" role="button">WG ARTYSTY</a>
+    <a class="btn btn-secondary btn-lg btn-block" href="{% url 'band-concerts-finder' %}" role="button">WG ZESPOŁU</a>
+    <a class="btn btn-secondary btn-lg btn-block" href="#" role="button">WG DATY</a>
+</p>
+{% endblock %}

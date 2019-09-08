@@ -14,12 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from concerts.views import LoadingPage
+from django.urls import path, re_path
+from concerts.views import LoadingPage, MainPage, ChooseFinder, BandConcertsFinder, SearchDreamConcert
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('main/', LoadingPage.as_view(), name='loading-page')
+    path('', LoadingPage.as_view(), name='loading-page'),
+    path('main/', MainPage.as_view(), name='main-page'),
+    path('choose_finder/', ChooseFinder.as_view(), name='choose-finder'),
+    path('band_concerts_finder/', BandConcertsFinder.as_view(), name='band-concerts-finder'),
+    path('search_dreamconcert/', SearchDreamConcert.as_view(), name='search-dreamconcert'),
 
 ]

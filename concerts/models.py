@@ -45,7 +45,10 @@ class Band(models.Model):
 
 
 class ConcertCity(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, blank=True)
+
+    def __str__(self):
+        return self.name
 
 
 class RealConcert(models.Model):
