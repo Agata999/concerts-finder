@@ -6,7 +6,8 @@ from .forms import SearchBandConcertsForm, SearchDreamConcertForm
 
 class LoadingPage(View):
     def get(self, request):
-        return render(request, "index.html")
+        samples = RealConcert.objects.all().order_by("likes")[:3]
+        return render(request, "index.html", {"samples": samples})
 
 
 class MainPage(View):
@@ -49,19 +50,27 @@ class BandConcertsFinder(View):
 
 class SearchDreamConcert(View):
     def get(self, request):
-        form = SearchDreamConcertForm()
-        concerts = DreamConcert.objects.all()
-        if "city" in request.GET:
-            search_ctx = request.GET["city"]
-            concerts = concerts.filter(city=search_ctx)
-        # if "bands" in request.GET:
-        #     search_ctx = request.GET["bands"]
-        #     concerts = concerts.filter(bands=search_ctx)
-        if "persons" in request.GET:
-            search_ctx = request.GET["persons"]
-            concerts = concerts.filter(persons=search_ctx)
+        search = "search" in request.GET
+        if search:
+            form = SearchDreamConcertForm(request.GET)
+            if form.is_valid():
+                city = form.cleaned_data["city"]
+                band = form.cleaned_data["bands"]
+                person = form.cleaned_data["persons"]
+
+                concerts = DreamConcert.objects.all()
+
+                if city:
+                    concerts = concerts.filter(city=city)
+                if band:
+                    concerts = concerts.filter(bands=band)
+                if person:
+                    concerts = concerts.filter(persons=person)
         else:
+            form = SearchDreamConcertForm()
             concerts = None
-        return render(request, "search_dream_concert.html", {"form": form,
-                                                             "concerts": concerts})
+
+        return render(request, 'search_dream_concert.html', {"form": form,
+                                                             "concerts": concerts,
+                                                             "search": search})
 

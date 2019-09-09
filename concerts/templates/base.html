@@ -17,28 +17,52 @@
     <div class="text-center cover-container d-flex h-100 p-3 mx-auto flex-column">
       <header class="masthead mb-auto">
         <div class="inner">
-          <h3 class="brand">Concerts Finder</h3>
-          <nav class="nav nav-masthead justify-content-center">
-            <a class="nav-link active" href="#">Strona główna</a>
-            <a class="nav-link" href="#">Znajdź koncert</a>
-            <a class="nav-link" href="#">Chcę koncert</a>
-            <a class="nav-link" href="#">Miasta</a>
-            <a class="nav-link" href="#">Top 10</a>
-          {%  if user.is_authenticated %}
-              <a class="nav-link" href="#">Wyloguj z: {{ user.username }}</a>
-          {% else %}
-              <a class="nav-link" href="#">Zaloguj</a>
-          {% endif %}
-          </nav>
+          <a href="/main" class="navbar-brand brand">
+                Concerts Finder
+          </a>
+            <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url "main-page" %}">Strona główna</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url "choose-finder" %}">Znajdź koncert</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'search-dreamconcert' %}">Chcę koncert</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Miasta</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">TOP 10</a>
+                    </li>
+                    <li class="nav-item">
+                         {%  if user.is_authenticated %}
+                             <a class="nav-link" href="#">
+                                Wyloguj z:<br>
+                                 {{ user.username }}
+                             </a>
+                          {% else %}
+                              <a class="nav-link" href="#">Zaloguj</a>
+                          {% endif %}
+                    </li>
+                  </ul>
+                </nav>
+                <br>
         </div>
       </header>
 
       <main role="main" class="inner cover">
+      <div>
+          {% block content %}
+          {% endblock %}
 {#        <h1 class="cover-heading">Cover your page.</h1>#}
 {#        <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>#}
 {#        <p class="lead">#}
 {#          <a href="#" class="btn btn-lg btn-secondary">Learn more</a>#}
 {#        </p>#}
+      </div>
       </main>
 
       <footer class="mastfoot mt-auto">

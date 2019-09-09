@@ -21,11 +21,11 @@ class SearchDreamConcertForm(forms.Form):
                                   widget=forms.Select,
                                   queryset=ConcertCity.objects.all().order_by("name"),
                                   required=False)
-    persons = forms.ModelChoiceField(label="Wybierz artystę/artystów",
+    persons = forms.ModelChoiceField(label="Wybierz artystę",
                                      queryset=Person.objects.all().order_by("last_name"),
                                      widget=forms.Select,
                                      required=False)
-    bands = forms.ModelChoiceField(label="Wybierz zespół/zespoły",
+    bands = forms.ModelChoiceField(label="Wybierz zespół",
                                    queryset=Band.objects.all().order_by("name"),
                                    widget=forms.Select,
                                    required=False)

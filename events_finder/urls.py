@@ -25,5 +25,4 @@ urlpatterns = [
     path('choose_finder/', ChooseFinder.as_view(), name='choose-finder'),
     path('band_concerts_finder/', BandConcertsFinder.as_view(), name='band-concerts-finder'),
     path('search_dreamconcert/', SearchDreamConcert.as_view(), name='search-dreamconcert'),
-
 ]
