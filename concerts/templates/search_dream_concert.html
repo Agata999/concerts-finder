@@ -33,7 +33,19 @@
                   {% endif %}
               </td>
               <td>{{ c.likes.count }}</td>
-              <td><a class="btn btn-danger" href="#" role="button">Like</a></td>
+                <td>
+                    <a class="btn btn-danger" href="{% url "dreamconcert-likes" c.id %}" role="button">
+                        Lubię to!
+                    </a>
+                </td>
+{#                  <form action="#" method="POST">#}
+{#        {% csrf_token %}#}
+{#        {% if request.user in c.likes.all %}#}
+{#        <input class="btn btn-danger" role="button" type="submit" value="Jednak nie lubię!" />#}
+{#        {% else %}#}
+{#        <input class="btn btn-danger" role="button" type="submit" value="Lubię to!" />#}
+{#        {% endif %}#}
+{#    </form>#}
             </tr>
             {% endfor %}
         </table>

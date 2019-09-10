@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from .models import RealConcert, DreamConcert
-from .forms import SearchBandConcertsForm, SearchDreamConcertForm
+from .forms import SearchBandConcertsForm, SearchArtistConcertsForm, SearchDateConcertsForm, SearchDreamConcertForm
 
 
 class LoadingPage(View):
@@ -48,6 +48,66 @@ class BandConcertsFinder(View):
                                                              "search": search})
 
 
+class ArtistConcertsFinder(View):
+    def get(self, request):
+        search = "search" in request.GET
+        if search:
+            form = SearchArtistConcertsForm(request.GET)
+            if form.is_valid():
+                last_name = form.cleaned_data["last_name"]
+                artistic_name = form.cleaned_data["artistic_name"]
+                city = form.cleaned_data["city"]
+                start_date = form.cleaned_data["start_date"]
+                end_date = form.cleaned_data["end_date"]
+
+                concerts = RealConcert.objects.all()
+
+                if last_name:
+                    concerts = concerts.filter(persons__last_name__icontains=last_name)
+                if artistic_name:
+                    concerts = concerts.filter(persons__artistic_name__icontains=artistic_name)
+                if city:
+                    concerts = concerts.filter(city=city)
+                if start_date:
+                    concerts = concerts.filter(start_date__date__gte=start_date)
+                if end_date:
+                    concerts = concerts.filter(start_date__date__lte=end_date)
+        else:
+            form = SearchArtistConcertsForm()
+            concerts = None
+
+        return render(request, 'artist_concerts_finder.html', {"form": form,
+                                                             "concerts": concerts,
+                                                             "search": search})
+
+
+class DateConcertsFinder(View):
+    def get(self, request):
+        search = "search" in request.GET
+        if search:
+            form = SearchDateConcertsForm(request.GET)
+            if form.is_valid():
+                city = form.cleaned_data["city"]
+                start_date = form.cleaned_data["start_date"]
+                end_date = form.cleaned_data["end_date"]
+
+                concerts = RealConcert.objects.all()
+
+                if city:
+                    concerts = concerts.filter(city=city)
+                if start_date:
+                    concerts = concerts.filter(start_date__date__gte=start_date)
+                if end_date:
+                    concerts = concerts.filter(start_date__date__lte=end_date)
+        else:
+            form = SearchDateConcertsForm()
+            concerts = None
+
+        return render(request, 'date_concerts_finder.html', {"form": form,
+                                                             "concerts": concerts,
+                                                             "search": search})
+
+
 class SearchDreamConcert(View):
     def get(self, request):
         search = "search" in request.GET
@@ -73,4 +133,24 @@ class SearchDreamConcert(View):
         return render(request, 'search_dream_concert.html', {"form": form,
                                                              "concerts": concerts,
                                                              "search": search})
+
+
+class LikeDreamConcert(View):
+    def get(self, request, id):
+        concert = get_object_or_404(DreamConcert, id=id)
+        return render(request, 'like_dream_concert.html', {"concert": concert})
+
+    def post (self, request, id):
+        concert = get_object_or_404(DreamConcert, id=id)
+        user = request.user
+        concert.likes.add(user)
+        return redirect("dreamconcert-likes", id=concert.id)
+
+
+class ConcertDetails(View):
+    def get(self, request, id):
+        concert = get_object_or_404(RealConcert, id=id)
+        return render(request, 'concert-details.html', {"concert": concert})
+
+
 

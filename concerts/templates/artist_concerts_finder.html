@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}
-    Band Concerts
+    Artist Concerts
 {% endblock %}
 {% block content %}
 
@@ -21,7 +21,7 @@
               <td>{{ c.city }}</td>
               <td>{{ c.name }}</td>
               <td>{{ c.start_date }}</td>
-              <td><a class="btn btn-danger" href="#" role="button">Szczegóły</a></td>
+              <td><a class="btn btn-danger" href="{% url 'concert-details' c.id %}" role="button">Szczegóły</a></td>
             </tr>
             {% endfor %}
         </table>
@@ -41,7 +41,7 @@
 
 {% else %}
 
-<form class="lead" action="{% url 'band-concerts-finder' %}" method="get">
+<form class="lead" action="{% url 'artist-concerts-finder' %}" method="get">
     {{ form.as_p }}
     <input class="btn btn-dark btn-lg" name="search" type="submit" value="Wyszukaj">
 </form>

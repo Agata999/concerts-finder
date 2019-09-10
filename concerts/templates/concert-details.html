@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}
+    {{ concert.name }}
+{% endblock %}
+{% block content %}
+<h3 class="cover-heading">{{concert.name}}</h3>
+    <table class="table table-striped table-dark">
+          <thead>
+            <tr>
+              <th scope="col">Miasto</th>
+              <th scope="col">Miejsce</th>
+              <th scope="col">Data</th>
+              <th scope="col">Artyści/Zespoły</th>
+              <th scope="col">Strona wydarzenia</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ concert.city }}</td>
+              <td>{{ concert.place }}</td>
+              <td>{{ concert.start_date }}</td>
+              <td>
+                  {% if concert.persons %}
+                      {% for p in concert.persons.all %}
+                      {{ p.name }} <br>
+                      {% endfor %}
+                  {% endif %}
+                  {% if concert.bands %}
+                      {% for b in concert.bands.all %}
+                      {{ b.name }} <br>
+                      {% endfor %}
+                  {% endif %}
+              </td>
+              <td><a class="btn btn-danger" href="{{ concert.facebook_page }}" role="button">Przejdź</a></td>
+            </tr>
+          </tbody>
+    </table>
+<br>
+        <p class="lead">{{concert.description}}</p>
+        <p class="lead">
+          <a href="{% url 'main-page' %}" class="btn btn-lg btn-danger">Powrót do strony głównej</a>
+        </p>
+
+
+{% endblock %}

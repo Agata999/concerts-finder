@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}
-    Band Concerts
+    Concerts
 {% endblock %}
 {% block content %}
 
@@ -41,7 +41,7 @@
 
 {% else %}
 
-<form class="lead" action="{% url 'band-concerts-finder' %}" method="get">
+<form class="lead" action="{% url 'date-concerts-finder' %}" method="get">
     {{ form.as_p }}
     <input class="btn btn-dark btn-lg" name="search" type="submit" value="Wyszukaj">
 </form>
