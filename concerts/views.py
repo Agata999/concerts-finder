@@ -1,18 +1,21 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from .models import RealConcert, DreamConcert
-from .forms import SearchBandConcertsForm, SearchArtistConcertsForm, SearchDateConcertsForm, SearchDreamConcertForm
+from .forms import SearchBandConcertsForm, SearchArtistConcertsForm, SearchDateConcertsForm, SearchDreamConcertForm, \
+    SearchCityConcertsForm
+
 
 
 class LoadingPage(View):
     def get(self, request):
-        samples = RealConcert.objects.all().order_by("likes")[:3]
+        samples = RealConcert.objects.all().order_by("likes")[:2]
         return render(request, "index.html", {"samples": samples})
 
 
 class MainPage(View):
     def get(self, request):
-        return render(request, "base.html")
+        concerts = RealConcert.objects.all().order_by("start_date")
+        return render(request, "main.html", {"concerts": concerts})
 
 
 class ChooseFinder(View):
@@ -147,10 +150,53 @@ class LikeDreamConcert(View):
         return redirect("dreamconcert-likes", id=concert.id)
 
 
+class LikeRealConcert(View):
+    def get(self, request, id):
+        concert = get_object_or_404(RealConcert, id=id)
+        return render(request, 'like_real_concert.html', {"concert": concert})
+
+    def post (self, request, id):
+        concert = get_object_or_404(RealConcert, id=id)
+        user = request.user
+        concert.likes.add(user)
+        return redirect("realconcert-likes", id=concert.id)
+
+
 class ConcertDetails(View):
     def get(self, request, id):
         concert = get_object_or_404(RealConcert, id=id)
         return render(request, 'concert-details.html', {"concert": concert})
+
+
+class CityConcertsFinder(View):
+    def get(self, request):
+        search = "search" in request.GET
+        if search:
+            form = SearchCityConcertsForm(request.GET)
+            if form.is_valid():
+                city = form.cleaned_data["city"]
+                start_date = form.cleaned_data["start_date"]
+                end_date = form.cleaned_data["end_date"]
+
+                concerts = RealConcert.objects.filter(city=city)
+
+                if start_date:
+                    concerts = concerts.filter(start_date__date__gte=start_date)
+                if end_date:
+                    concerts = concerts.filter(start_date__date__lte=end_date)
+        else:
+            form = SearchCityConcertsForm()
+            concerts = None
+
+        return render(request, 'city_concerts_finder.html', {"form": form,
+                                                             "concerts": concerts,
+                                                             "search": search})
+
+
+class TopConcerts(View):
+    def get(self, request):
+        concerts = RealConcert.objects.all().order_by("likes")[:9]
+        return render(request, "top_concerts.html", {"concerts": concerts})
 
 
 

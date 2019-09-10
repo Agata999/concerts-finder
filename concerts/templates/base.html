@@ -32,10 +32,10 @@
                       <a class="nav-link" href="{% url 'search-dreamconcert' %}">Chcę koncert</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#">Miasta</a>
+                      <a class="nav-link" href="{% url 'city-concerts-finder' %}">Miasta</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#">TOP 10</a>
+                      <a class="nav-link" href="{% url 'top-concerts' %}">TOP 10</a>
                     </li>
                     <li class="nav-item">
                          {%  if user.is_authenticated %}

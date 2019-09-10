@@ -1,5 +1,5 @@
 from django import forms
-from .models import ConcertCity, DreamConcert, Person, Band
+from .models import ConcertCity, Person, Band
 
 
 class SearchBandConcertsForm(forms.Form):
@@ -57,3 +57,16 @@ class SearchDreamConcertForm(forms.Form):
                                    queryset=Band.objects.all().order_by("name"),
                                    widget=forms.Select,
                                    required=False)
+
+
+class SearchCityConcertsForm(forms.Form):
+    city = forms.ModelChoiceField(label="Wybierz miasto",
+                                  widget=forms.Select,
+                                  queryset=ConcertCity.objects.all().order_by("name"))
+    start_date = forms.DateField(label="Jeśli chcesz, wskaż najwcześniejszy termin koncertu",
+                                 widget=forms.SelectDateWidget,
+                                 required=False)
+    end_date = forms.DateField(label="Jeśli chcesz, wskaż najpóźniejszy termin koncertu",
+                               widget=forms.SelectDateWidget,
+                               required=False)
+

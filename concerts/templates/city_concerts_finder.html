@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}
-    Concerts
+    City Concerts
 {% endblock %}
 {% block content %}
 
@@ -25,14 +25,14 @@
             </tr>
             {% endfor %}
         </table>
+         <p class="lead">
+          <a href="{% url 'city-concerts-finder' %}" class="btn btn-lg btn-danger">Wyszukaj ponownie</a>
+        </p>
      {% else %}
          <h3 class="cover-heading">Przykro nam! Nie znaleźliśmy koncertów spełniających Twoje kryteria</h3>
         <p class="lead">
-          <a href="#" class="btn btn-lg btn-dark">Wyszukaj ponownie</a>
-        </p>
-         <p class="lead">
-          <a href="#" class="btn btn-lg btn-dark">Wróć do wyboru opcji wyszukiwania</a>
-        </p><br>
+          <a href="{% url 'city-concerts-finder' %}" class="btn btn-lg btn-dark">Wyszukaj ponownie</a>
+       <br>
         <p class="lead">Wyraź swoje zainteresowanie koncertem. Może uda się go zorganizować</p>
         <p class="lead">
           <a href="{% url 'search-dreamconcert' %}" class="btn btn-lg btn-danger">Chcę koncert !</a>
@@ -41,7 +41,7 @@
 
 {% else %}
 
-<form class="lead" action="{% url 'date-concerts-finder' %}" method="get">
+<form class="lead" action="{% url 'city-concerts-finder' %}" method="get">
     {{ form.as_p }}
     <input class="btn btn-dark btn-lg" name="search" type="submit" value="Wyszukaj">
 </form>

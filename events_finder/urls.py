@@ -16,7 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path
 from concerts.views import LoadingPage, MainPage, ChooseFinder, BandConcertsFinder, ArtistConcertsFinder, \
-    DateConcertsFinder, SearchDreamConcert, LikeDreamConcert, ConcertDetails
+    DateConcertsFinder, SearchDreamConcert, LikeDreamConcert, ConcertDetails, TopConcerts, LikeRealConcert, \
+    CityConcertsFinder
 
 
 urlpatterns = [
@@ -29,5 +30,8 @@ urlpatterns = [
     path('date_concerts_finder/', DateConcertsFinder.as_view(), name='date-concerts-finder'),
     path('search_dreamconcert/', SearchDreamConcert.as_view(), name='search-dreamconcert'),
     re_path(r'^like_dreamconcert/(?P<id>(\d)+)', LikeDreamConcert.as_view(), name='dreamconcert-likes'),
-    re_path(r'^concert_details/(?P<id>(\d)+)', ConcertDetails.as_view(), name='concert-details')
+    re_path(r'^like_realconcert/(?P<id>(\d)+)', LikeRealConcert.as_view(), name='realconcert-likes'),
+    re_path(r'^concert_details/(?P<id>(\d)+)', ConcertDetails.as_view(), name='concert-details'),
+    path('city_concerts_finder/', CityConcertsFinder.as_view(), name='city-concerts-finder'),
+    path('top10/', TopConcerts.as_view(), name='top-concerts')
 ]
