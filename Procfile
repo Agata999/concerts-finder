@@ -1,1 +1,1 @@
-web: gunicorn scrumlab.wsgi
+web: gunicorn events_finder.wsgi
