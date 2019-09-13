@@ -8,7 +8,7 @@ from .forms import SearchBandConcertsForm, SearchArtistConcertsForm, SearchDateC
 
 class LoadingPage(View):
     def get(self, request):
-        samples = RealConcert.objects.all().order_by("likes")[:2]
+        samples = RealConcert.objects.all().order_by("likes")[:3]
         return render(request, "index.html", {"samples": samples})
 
 
@@ -195,7 +195,7 @@ class CityConcertsFinder(View):
 
 class TopConcerts(View):
     def get(self, request):
-        concerts = RealConcert.objects.all().order_by("likes")[:9]
+        concerts = RealConcert.objects.all().order_by("likes")[:10]
         return render(request, "top_concerts.html", {"concerts": concerts})
 
 
