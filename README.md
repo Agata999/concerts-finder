@@ -26,7 +26,9 @@ All you got to do is to like a dream concert from the list or add any concert yo
 * 'python manage.py runserver'
 
 ## Features
-List of features ready and TODOs for future development
+List of features ready and TODOs for future development.
+
+Ready:
 * Landing page as a carousel with the most popular concerts
 * Searching concerts by an artist's name, a band's name, city and date
 * Lists of all concerts and top 10
