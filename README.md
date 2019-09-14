@@ -1,6 +1,6 @@
 # Concerts Finder
 > Concerts Finder is a website created with Django. You can find concerts with various options but if you can't find anything what you need, you can show your interest.
-All you got to do is to like a dream concert from the list or add any concert invented by you to the list of dream concerts.
+All you got to do is to like a dream concert from the list or add any concert you want.
 
 ## Table of contents
 * [Technologies](#technologies)
@@ -30,7 +30,7 @@ List of features ready and TODOs for future development
 * Lists of all concerts and top 10
 * Concert details with event page on Facebook
 * Possibility to like concerts (option for logged in users only)
-* Dream concerts - if you can't find any interesting events, you can show your interest by liking dream concerts or adding any concert invented by you to the list of dream concerts (option for logged in users only)
+* Dream concerts - if you can't find any interesting events, you can show your interest by liking dream concerts or adding any concert you want (option for logged in users only)
 
 To-do list:
 * Adding and editing list of concerts
