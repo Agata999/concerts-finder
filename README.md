@@ -17,13 +17,13 @@ All you got to do is to like a dream concert from the list or add any concert yo
 
 ## Setup
 * Clone git repository
-* Create virtualenv 'virtualenv -p python3 venv'
-* Activate virtualenv 'source venv/bin/activate'
-* Install requirements 'pip install -r requirements.txt'
-* Setup psql database called 'concerts_db'
+* Create virtualenv `virtualenv -p python3 venv`
+* Activate virtualenv `source venv/bin/activate`
+* Install requirements `pip install -r requirements.txt`
+* Setup psql database called `concerts_db`
 * Change psql user and password to yours
-* 'python manage.py migrate'
-* 'python manage.py runserver'
+* `python manage.py migrate`
+* `python manage.py runserver`
 
 ## Features
 List of features ready and TODOs for future development.
