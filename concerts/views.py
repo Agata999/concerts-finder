@@ -1,14 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
+from django.db.models import Count
 from .models import RealConcert, DreamConcert
 from .forms import SearchBandConcertsForm, SearchArtistConcertsForm, SearchDateConcertsForm, SearchDreamConcertForm, \
     SearchCityConcertsForm
 
 
-
 class LoadingPage(View):
     def get(self, request):
-        samples = RealConcert.objects.all().order_by("likes")[:3]
+        samples = RealConcert.objects.all().annotate(likes_count=Count("likes")).order_by("-likes_count")[:3]
         return render(request, "index.html", {"samples": samples})
 
 
@@ -195,7 +195,7 @@ class CityConcertsFinder(View):
 
 class TopConcerts(View):
     def get(self, request):
-        concerts = RealConcert.objects.all().order_by("likes")[:10]
+        concerts = RealConcert.objects.all().annotate(likes_count=Count("likes")).order_by("-likes_count")[:10]
         return render(request, "top_concerts.html", {"concerts": concerts})
 
 
