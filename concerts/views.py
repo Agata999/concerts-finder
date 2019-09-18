@@ -1,12 +1,13 @@
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.db.models import Count
 from .models import RealConcert, DreamConcert
 from .forms import SearchBandConcertsForm, SearchArtistConcertsForm, SearchDateConcertsForm, SearchDreamConcertForm, \
-    SearchCityConcertsForm
+    SearchCityConcertsForm, AddDreamConcertForm
 
 
-class LoadingPage(View):
+class LandingPage(View):
     def get(self, request):
         samples = RealConcert.objects.all().annotate(likes_count=Count("likes")).order_by("-likes_count")[:3]
         return render(request, "index.html", {"samples": samples})
@@ -80,8 +81,8 @@ class ArtistConcertsFinder(View):
             concerts = None
 
         return render(request, 'artist_concerts_finder.html', {"form": form,
-                                                             "concerts": concerts,
-                                                             "search": search})
+                                                               "concerts": concerts,
+                                                               "search": search})
 
 
 class DateConcertsFinder(View):
@@ -109,45 +110,6 @@ class DateConcertsFinder(View):
         return render(request, 'date_concerts_finder.html', {"form": form,
                                                              "concerts": concerts,
                                                              "search": search})
-
-
-class SearchDreamConcert(View):
-    def get(self, request):
-        search = "search" in request.GET
-        if search:
-            form = SearchDreamConcertForm(request.GET)
-            if form.is_valid():
-                city = form.cleaned_data["city"]
-                band = form.cleaned_data["bands"]
-                person = form.cleaned_data["persons"]
-
-                concerts = DreamConcert.objects.all()
-
-                if city:
-                    concerts = concerts.filter(city=city)
-                if band:
-                    concerts = concerts.filter(bands=band)
-                if person:
-                    concerts = concerts.filter(persons=person)
-        else:
-            form = SearchDreamConcertForm()
-            concerts = None
-
-        return render(request, 'search_dream_concert.html', {"form": form,
-                                                             "concerts": concerts,
-                                                             "search": search})
-
-
-class LikeDreamConcert(View):
-    def get(self, request, id):
-        concert = get_object_or_404(DreamConcert, id=id)
-        return render(request, 'like_dream_concert.html', {"concert": concert})
-
-    def post (self, request, id):
-        concert = get_object_or_404(DreamConcert, id=id)
-        user = request.user
-        concert.likes.add(user)
-        return redirect("dreamconcert-likes", id=concert.id)
 
 
 class LikeRealConcert(View):
@@ -196,7 +158,71 @@ class CityConcertsFinder(View):
 class TopConcerts(View):
     def get(self, request):
         concerts = RealConcert.objects.all().annotate(likes_count=Count("likes")).order_by("-likes_count")[:10]
-        return render(request, "top_concerts.html", {"concerts": concerts})
+        numbers = [i for i in range(1,10)]
+        return render(request, "top_concerts.html", {"concerts": concerts,
+                                                     "numbers": numbers})
 
 
+class ListOfDreamConcerts(View):
+    def get(self, request):
+        concerts = DreamConcert.objects.all().annotate(likes_count=Count("likes")).order_by("-likes_count")
+        return render(request, "list_of_dream_concerts.html", {"concerts": concerts})
+
+
+class SearchDreamConcert(View):
+    def get(self, request):
+        search = "search" in request.GET
+        if search:
+            form = SearchDreamConcertForm(request.GET)
+            if form.is_valid():
+                city = form.cleaned_data["city"]
+                band = form.cleaned_data["band"]
+                person = form.cleaned_data["person"]
+
+                concerts = DreamConcert.objects.all()
+
+                if city:
+                    concerts = concerts.filter(city=city)
+                if band:
+                    concerts = concerts.filter(bands=band)
+                if person:
+                    concerts = concerts.filter(persons=person)
+        else:
+            form = SearchDreamConcertForm()
+            concerts = None
+
+        return render(request, 'search_dream_concert.html', {"form": form,
+                                                             "concerts": concerts,
+                                                             "search": search})
+
+
+class LikeDreamConcert(View):
+    def get(self, request, id):
+        concert = get_object_or_404(DreamConcert, id=id)
+        return render(request, 'like_dream_concert.html', {"concert": concert})
+
+    def post (self, request, id):
+        concert = get_object_or_404(DreamConcert, id=id)
+        user = request.user
+        concert.likes.add(user)
+        return redirect("dreamconcert-likes", id=concert.id)
+
+
+class AddDreamConcert(View):
+    def get(self, request):
+        form = AddDreamConcertForm()
+        return render(request, "add_dream_concert.html", {"form": form})
+
+    def post(self, request):
+        form = AddDreamConcertForm(request.POST)
+        if form.is_valid():
+            city = form.cleaned_data['city']
+            person = form.cleaned_data['person']
+            band = form.cleaned_data['band']
+            p = DreamConcert.objects.create(city=city)
+            if person:
+                p.persons.add(person)
+            if band:
+                p.bands.add(band)
+        return redirect("dreamconcert-likes", id=p.id)
 

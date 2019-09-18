@@ -1,10 +1,13 @@
 {% extends "base.html" %}
 
+{% block title %}
+    Add Dream Concert
+{% endblock %}
+
 {% block content %}
-<center>
-<form class="text-light" action="{% url 'add-dreamconcert' %}" method="post">
+<form class="lead" action="{% url 'add-dreamconcert' %}" method="post">
+    {% csrf_token %}
     {{ form.as_p }}
     <input class="btn btn-dark" type="submit" value="Dodaj">
 </form>
-</center>
 {% endblock %}

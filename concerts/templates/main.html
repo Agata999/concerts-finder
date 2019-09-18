@@ -1,29 +1,32 @@
 {% extends "base.html" %}
+
 {% block title %}
     All Concerts
 {% endblock %}
+
 {% block content %}
-
-
-        <table class="table table-striped table-dark">
-          <thead>
-            <tr>
-              <th scope="col">Miasto</th>
-              <th scope="col">Koncert</th>
-              <th scope="col">Data</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          {% for c in concerts %}
-          <tbody>
-            <tr>
-              <td>{{ c.city }}</td>
-              <td>{{ c.name }}</td>
-              <td>{{ c.start_date }}</td>
-              <td><a class="btn btn-danger" href="{% url 'concert-details' c.id %}" role="button">Szczegóły</a></td>
-            </tr>
-            {% endfor %}
-        </table>
-
+<h2 class="cover-heading">Zagrają dla Was</h2>
+<table class="table table-striped table-dark">
+  <thead>
+    <tr>
+      <th scope="col">Miasto</th>
+      <th scope="col">Koncert</th>
+      <th scope="col">Data</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  {% for c in concerts %}
+  <tbody>
+    <tr>
+      <td>{{ c.city }}</td>
+      <td>{{ c.name }}</td>
+      <td>{{ c.start_date }}</td>
+      <td><a class="btn btn-danger" href="{% url 'concert-details' c.id %}" role="button">Szczegóły</a></td>
+    </tr>
+    {% endfor %}
+</table>
+<p class="lead">
+    <a href="{% url 'choose-finder' %}" class="btn btn-lg btn-danger">Wyszukaj koncertu</a>
+</p>
 
 {% endblock %}

@@ -28,10 +28,10 @@
      {% else %}
          <h3 class="cover-heading">Przykro nam! Nie znaleźliśmy koncertów spełniających Twoje kryteria</h3>
         <p class="lead">
-          <a href="#" class="btn btn-lg btn-dark">Wyszukaj ponownie</a>
+          <a href="{% url 'band-concerts-finder' %}" class="btn btn-lg btn-dark">Wyszukaj ponownie</a>
         </p>
          <p class="lead">
-          <a href="#" class="btn btn-lg btn-dark">Wróć do wyboru opcji wyszukiwania</a>
+          <a href="{% url 'choose-finder' %}" class="btn btn-lg btn-dark">Wróć do wyboru opcji wyszukiwania</a>
         </p><br>
         <p class="lead">Wyraź swoje zainteresowanie koncertem. Może uda się go zorganizować</p>
         <p class="lead">
