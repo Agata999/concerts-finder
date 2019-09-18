@@ -4,7 +4,7 @@ from django.views import View
 from django.db.models import Count
 from .models import RealConcert, DreamConcert
 from .forms import SearchBandConcertsForm, SearchArtistConcertsForm, SearchDateConcertsForm, SearchDreamConcertForm, \
-    SearchCityConcertsForm, AddDreamConcertForm
+    SearchCityConcertsForm, AddDreamConcertForm, UserForm
 
 
 class LandingPage(View):
@@ -226,3 +226,25 @@ class AddDreamConcert(View):
                 p.bands.add(band)
         return redirect("dreamconcert-likes", id=p.id)
 
+
+class LoginView(View):
+    def get(self, request):
+        form = UserForm()
+        return render(request, 'login.html', {"form": form})
+
+    def post(self, request):
+        form = UserForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('main-page')
+        return redirect('login')
+
+
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        return redirect('main-page')

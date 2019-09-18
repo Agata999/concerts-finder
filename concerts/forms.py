@@ -84,3 +84,9 @@ class AddDreamConcertForm(forms.Form):
                                    widget=forms.Select,
                                    required=False)
 
+
+class UserForm(forms.Form):
+    username = forms.CharField(label='Podaj login', max_length=64)
+    password = forms.CharField(label='Podaj hasło', widget=forms.PasswordInput)
+
+
