@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 
 {%  block content %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li style="color: red;">{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
 <h1>Zaloguj się: </h1>
 <form action="{% url 'login' %}" method="post">
     <div class="fieldWrapper">

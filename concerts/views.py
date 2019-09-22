@@ -1,7 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.db.models import Count
+from django.contrib import messages
 from .models import RealConcert, DreamConcert
 from .forms import SearchBandConcertsForm, SearchArtistConcertsForm, SearchDateConcertsForm, SearchDreamConcertForm, \
     SearchCityConcertsForm, AddDreamConcertForm, UserForm
@@ -111,8 +113,34 @@ class DateConcertsFinder(View):
                                                              "concerts": concerts,
                                                              "search": search})
 
+class LoginView(View):
+    def get(self, request):
+        form = UserForm()
+        return render(request, 'login.html', {"form": form})
 
-class LikeRealConcert(View):
+    def post(self, request):
+        form = UserForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('main-page')
+            else:
+                messages.warning(request, 'Błędny login i/lub hasło')
+        return render(request, 'login.html', {'form': form})
+
+
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        return redirect('main-page')
+
+
+class LikeRealConcert(LoginRequiredMixin, View):
+    login_url = '/login/'
+
     def get(self, request, id):
         concert = get_object_or_404(RealConcert, id=id)
         return render(request, 'like_real_concert.html', {"concert": concert})
@@ -196,7 +224,9 @@ class SearchDreamConcert(View):
                                                              "search": search})
 
 
-class LikeDreamConcert(View):
+class LikeDreamConcert(LoginRequiredMixin, View):
+    login_url = '/login/'
+
     def get(self, request, id):
         concert = get_object_or_404(DreamConcert, id=id)
         return render(request, 'like_dream_concert.html', {"concert": concert})
@@ -227,24 +257,4 @@ class AddDreamConcert(View):
         return redirect("dreamconcert-likes", id=p.id)
 
 
-class LoginView(View):
-    def get(self, request):
-        form = UserForm()
-        return render(request, 'login.html', {"form": form})
 
-    def post(self, request):
-        form = UserForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('main-page')
-        return redirect('login')
-
-
-class LogoutView(View):
-    def get(self, request):
-        logout(request)
-        return redirect('main-page')
