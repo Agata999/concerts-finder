@@ -1,12 +1,13 @@
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.db.models import Count
 from django.contrib import messages
 from .models import RealConcert, DreamConcert
 from .forms import SearchBandConcertsForm, SearchArtistConcertsForm, SearchDateConcertsForm, SearchDreamConcertForm, \
-    SearchCityConcertsForm, AddDreamConcertForm, UserForm
+    SearchCityConcertsForm, AddDreamConcertForm, UserForm, RegisterUserForm, ResetPasswordForm
 
 
 class LandingPage(View):
@@ -136,6 +137,25 @@ class LogoutView(View):
     def get(self, request):
         logout(request)
         return redirect('main-page')
+
+
+class RegisterUserView(View):
+    def get(self, request):
+        form = RegisterUserForm()
+        return render(request, 'register_user.html', {"form": form})
+
+    def post(self, request):
+        form = RegisterUserForm(request.POST)
+        if form.is_valid():
+            login = form.cleaned_data["login"]
+            password = form.cleaned_data["password"]
+            conf_password = form.cleaned_data["conf_password"]
+            if password == conf_password:
+                User.objects.create_user(username=login, password=password)
+                return redirect('login')
+            else:
+                messages.warning(request, 'Podane hasła nie są identyczne!')
+                return render(request, 'register_user.html', {'form': form})
 
 
 class LikeRealConcert(LoginRequiredMixin, View):

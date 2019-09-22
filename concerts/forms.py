@@ -90,3 +90,12 @@ class UserForm(forms.Form):
     password = forms.CharField(label='Podaj hasło', widget=forms.PasswordInput)
 
 
+class RegisterUserForm(forms.Form):
+    login = forms.CharField(label='Login:', max_length=64)
+    password = forms.CharField(label='Hasło:', widget=forms.PasswordInput)
+    conf_password = forms.CharField(label='Potwierdź hasło:', widget=forms.PasswordInput)
+
+
+class ResetPasswordForm(forms.Form):
+    password = forms.CharField(label='Podaj nowe hasło:', widget=forms.PasswordInput)
+    conf_password = forms.CharField(label='Potwierdź hasło:', widget=forms.PasswordInput)

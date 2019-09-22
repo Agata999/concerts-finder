@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {%  block content %}
-
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}
@@ -10,18 +9,13 @@
 </ul>
 {% endif %}
 
-<h1>Zaloguj się: </h1></br>
-
-<form action="{% url 'login' %}" method="post">
+<h1>Zarejestruj się: </h1>
+<br>
+<form action="{% url 'register_user' %}" method="post">
     <div class="fieldWrapper">
         {% csrf_token %}
         {{ form.as_p }}
     </div>
-    <input type="submit" value="Zaloguj" class="btn btn-primary">
-</form></br>
-
-<p class="lead">
-    <a href="{% url 'register_user' %}" class="btn btn-lg btn-danger">Zarejestruj</a>
-</p>
-
+    <input type="submit" value="Zarejestruj" class="btn btn-primary">
+</form>
 {% endblock %}

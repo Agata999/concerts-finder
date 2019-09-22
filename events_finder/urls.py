@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, re_path
 from concerts.views import LandingPage, MainPage, ChooseFinder, BandConcertsFinder, ArtistConcertsFinder, \
     DateConcertsFinder, CityConcertsFinder, ConcertDetails, TopConcerts, LikeRealConcert, ListOfDreamConcerts, \
-    SearchDreamConcert, LikeDreamConcert, AddDreamConcert, LoginView, LogoutView
+    SearchDreamConcert, LikeDreamConcert, AddDreamConcert, LoginView, LogoutView, RegisterUserView
 
 
 urlpatterns = [
@@ -38,4 +38,5 @@ urlpatterns = [
     path('add_dreamconcert/', AddDreamConcert.as_view(), name='add-dreamconcert'),
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
+    path('register/', RegisterUserView.as_view(), name='register_user')
 ]
