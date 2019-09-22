@@ -31,14 +31,12 @@ List of features ready and TODOs for future development.
 Ready:
 * Landing page as a carousel with the most popular concerts
 * Searching concerts by an artist's name, a band's name, city and date
-* Lists of all concerts and top 10
+* List of all concerts and top 10
 * Concert details with event page on Facebook
 * Possibility to like concerts (option for logged in users only)
 * Dream concerts - if you can't find any interesting events, you can show your interest by liking dream concerts or adding any concert you want (option for logged in users only)
 
 To-do list:
-* Adding and editing list of concerts
-* Login/Logout
 * REST API
 
 ## Status
