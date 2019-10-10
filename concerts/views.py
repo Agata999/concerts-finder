@@ -150,12 +150,15 @@ class RegisterUserView(View):
             login = form.cleaned_data["login"]
             password = form.cleaned_data["password"]
             conf_password = form.cleaned_data["conf_password"]
-            if password == conf_password:
-                User.objects.create_user(username=login, password=password)
-                return redirect('login')
-            else:
-                messages.warning(request, 'Podane hasła nie są identyczne!')
+            users = [user.username for user in User.objects.all()]
+            if login in users:
+                messages.warning(request, 'Podany login jest już zajęty! Wymyśl inny')
                 return render(request, 'register_user.html', {'form': form})
+            elif password != conf_password:
+                messages.warning(request, 'Podane hasła nie są identyczne! Spróbuj jeszcze raz')
+                return render(request, 'register_user.html', {'form': form})
+            User.objects.create_user(username=login, password=password)
+            return redirect('login')
 
 
 class LikeRealConcert(LoginRequiredMixin, View):
@@ -194,6 +197,7 @@ class CityConcertsFinder(View):
                     concerts = concerts.filter(start_date__date__gte=start_date)
                 if end_date:
                     concerts = concerts.filter(start_date__date__lte=end_date)
+
         else:
             form = SearchCityConcertsForm()
             concerts = None
