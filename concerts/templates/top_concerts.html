@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block content %}
+</br>
+<h2 class="cover-heading">TOP 10 - NAJPOPULARNIEJSZE</h2>
 <table class="table table-striped table-dark">
   <thead>
     <tr>
@@ -22,7 +24,7 @@
       <td>{{ c.name }}</td>
       <td>{{ c.start_date }}</td>
       <td>{{ c.likes.count }}</td>
-      <td><a class="btn btn-danger" href="{% url 'concert-details' c.id %}" role="button">Szczegóły</a></td>
+      <td><a class="btn btn-dark" href="{% url 'concert-details' c.id %}" role="button">Szczegóły</a></td>
     </tr>
   </tbody>
     {% endfor %}
@@ -32,4 +34,12 @@
     <a href="{% url 'main-page' %}" class="btn btn-lg btn-danger">Powrót do strony głównej</a>
 </p>
 
+{% endblock %}
+
+{% block footer %}
+<footer class="mastfoot mt-auto">
+    <div class="inner">
+      <p>Made by Agata Orzechowska</p>
+    </div>
+</footer>
 {% endblock %}

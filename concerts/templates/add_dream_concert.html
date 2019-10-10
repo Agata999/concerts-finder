@@ -5,9 +5,18 @@
 {% endblock %}
 
 {% block content %}
+<h3 class="cover-heading">Dodaj wymarzony koncert:</h3><br>
 <form class="lead" action="{% url 'add-dreamconcert' %}" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <input class="btn btn-dark" type="submit" value="Dodaj">
 </form>
+{% endblock %}
+
+{% block footer %}
+<footer class="mastfoot mt-auto">
+    <div class="inner">
+      <p>Made by Agata Orzechowska</p>
+    </div>
+</footer>
 {% endblock %}

@@ -17,8 +17,12 @@ a:hover {
 
 .carousel-concerts-name {
   font-family: 'Roboto Slab', serif;
-  font-size: 30px;
   color: white;
+}
+
+.carousel-item {
+  width:1000px;
+  height:540px;
 }
 
 /* Custom default button */
@@ -31,6 +35,17 @@ a:hover {
   border: .05rem solid #fff;
 }
 
+
+
+
+.messages {
+  color: #cc1111;
+  font-size: medium;
+}
+
+.navbars {
+  font-size: large;
+}
 
 /*
  * Base structure

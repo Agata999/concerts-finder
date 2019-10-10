@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+<br>
 <h5>
     <p>Wszyscy chcemy tego koncertu !!</p>
     <p>Pokażmy, ile nas jest !</p>
@@ -36,4 +37,12 @@
 <p class="lead">
   <a href="{% url 'list-of-dreamconcerts' %}" class="btn btn-lg btn-dark">Wróć do koncertów marzeń</a>
 </p>
+{% endblock %}
+
+{% block footer %}
+<footer class="mastfoot mt-auto">
+    <div class="inner">
+      <p>Made by Agata Orzechowska</p>
+    </div>
+</footer>
 {% endblock %}

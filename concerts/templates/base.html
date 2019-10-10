@@ -13,7 +13,6 @@
   </head>
 
   <body>
-
     <div class="text-center cover-container d-flex h-100 p-3 mx-auto flex-column">
       <header class="masthead mb-auto">
         <div class="inner">
@@ -21,7 +20,7 @@
                 Concerts Finder
           </a>
             <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav navbars">
                     <li class="nav-item">
                       <a class="nav-link" href="{% url "main-page" %}">Strona główna</a>
                     </li>
@@ -49,7 +48,6 @@
                     </li>
                   </ul>
                 </nav>
-                <br>
         </div>
       </header>
 
@@ -57,19 +55,11 @@
       <div>
           {% block content %}
           {% endblock %}
-{#        <h1 class="cover-heading">Cover your page.</h1>#}
-{#        <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>#}
-{#        <p class="lead">#}
-{#          <a href="#" class="btn btn-lg btn-secondary">Learn more</a>#}
-{#        </p>#}
       </div>
       </main>
+    </br>
+    {% block footer %}{% endblock %}
 
-      <footer class="mastfoot mt-auto">
-        <div class="inner">
-          <p>Made by Agata Orzechowska</p>
-        </div>
-      </footer>
     </div>
 
 

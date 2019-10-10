@@ -40,10 +40,23 @@
         </p><br>
      {% endif %}
 {% else %}
+<br> <h3 class="cover-heading">Szukasz według daty:</h3></br>
 <form class="lead" action="{% url 'date-concerts-finder' %}" method="get">
     {{ form.as_p }}
     <input class="btn btn-dark btn-lg" name="search" type="submit" value="Wyszukaj">
 </form>
+<br>
+<p class="lead">
+  <a href="{% url 'choose-finder' %}" class="btn btn-lg btn-dark">Wróć do wyboru opcji wyszukiwania</a>
+</p>
 {% endif %}
 
+{% endblock %}
+
+{% block footer %}
+<footer class="mastfoot mt-auto">
+    <div class="inner">
+      <p>Made by Agata Orzechowska</p>
+    </div>
+</footer>
 {% endblock %}

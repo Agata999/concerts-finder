@@ -1,25 +1,7 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <title>Concerts Finder TOP 3</title>
-    {% load static %}
-      <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/cover/">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static "css/style.css" %}">
-    <link href="https://fonts.googleapis.com/css?family=Anton&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab&display=swap" rel="stylesheet">
-</head>
-<body>
-  <div class="text-center cover-container d-flex h-100 p-3 mx-auto flex-column">
-      <header class="masthead mb-auto">
-          <div class="inner">
-              <a href="/main" class="navbar-brand brand">
-                Concerts Finder TOP 3
-              </a>
-          </div>
-      </header>
+{% extends 'base.html' %}
 
+{% block content %}
+    {% load static %}
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
     <li data-target="0" data-slide-to="0" class="active"></li>
@@ -28,25 +10,30 @@
   </ol>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img class="d-block w-100" src="{% static "images/photo3.png" %}" width="600" height="600" alt="First slide">
-        <div class="carousel-caption d-md-block">
-            <h5 class="carousel-concerts-name">{{ samples.0.name }}</h5>
-            <p>{{samples.0.city}} {{ samples.0.start_date|date }}</p>
+
+        <img class="d-block w-100" src="{% static "images/photo3.png" %}" alt="First slide">
+        <div class="carousel-caption d-md-block carousel-concerts-name">
+            <h3><a href="{% url 'concert-details' samples.0.id %}">{{ samples.0.name }}</a></h3>
+            <h5>{{samples.0.city}} {{ samples.0.start_date|date }}</h5>
         </div>
+
     </div>
     <div class="carousel-item">
-      <img class="d-block w-100" src="{% static "images/photo2.png" %}" width="600" height="600" alt="Second slide">
-        <div class="carousel-caption d-md-block">
-            <h5 class="carousel-concerts-name">{{ samples.1.name }}</h5>
-            <p>{{samples.1.city}} {{ samples.1.start_date|date }}</p>
+
+        <img class="d-block w-100" src="{% static "images/photo2.png" %}" alt="Second slide">
+        <div class="carousel-caption d-md-block carousel-concerts-name">
+            <h3><a href="{% url 'concert-details' samples.1.id %}">{{ samples.1.name }}</a></h3>
+            <h5>{{samples.1.city}} {{ samples.1.start_date|date }}</h5>
         </div>
+
     </div>
     <div class="carousel-item">
-      <img class="d-block w-100" src="{% static "images/photo.png" %}" width="600" height="600" alt="Third slide">
-        <div class="carousel-caption d-md-block">
-            <h5 class="carousel-concerts-name">{{ samples.2.name }}</h5>
-            <p>{{samples.2.city}} {{ samples.2.start_date|date }}</p>
+        <img class="d-block w-100" src="{% static "images/photo.png" %}" alt="Third slide">
+        <div class="carousel-caption d-md-block carousel-concerts-name">
+            <h3><a href="{% url 'concert-details' samples.2.id %}">{{ samples.2.name }}</a></h3>
+            <h5>{{samples.2.city}} {{ samples.2.start_date|date }}</h5>
         </div>
+      </a>
     </div>
   </div>
   <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -60,10 +47,4 @@
 </div>
 
 </div>
-
- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  </body>
-</html>
+{% endblock %}

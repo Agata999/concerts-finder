@@ -3,16 +3,16 @@
 {%  block content %}
 
 {% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li style="color: red;">{{ message }}</li>
-    {% endfor %}
-</ul>
+
+{% for message in messages %}
+    <p class="messages">{{ message }}</p>
+{% endfor %}
+
 {% endif %}
 
-<h1>Zaloguj się: </h1></br>
+<h3>Zaloguj się: </h3></br>
 
-<form action="{% url 'login' %}" method="post">
+<form class="lead" action="{% url 'login' %}" method="post">
     <div class="fieldWrapper">
         {% csrf_token %}
         {{ form.as_p }}
@@ -24,4 +24,12 @@
     <a href="{% url 'register_user' %}" class="btn btn-lg btn-danger">Zarejestruj</a>
 </p>
 
+{% endblock %}
+
+{% block footer %}
+<footer class="mastfoot mt-auto">
+    <div class="inner">
+      <p>Made by Agata Orzechowska</p>
+    </div>
+</footer>
 {% endblock %}

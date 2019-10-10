@@ -40,11 +40,19 @@
         </p><br>
      {% endif %}
 {% else %}
-<h2 class="cover-heading">Wyszukaj koncertu w Twoim mieście</h2><br>
+<h3 class="cover-heading">Szukasz koncertu według miasta:</h3><br>
 <form class="lead" action="{% url 'city-concerts-finder' %}" method="get">
     {{ form.as_p }}
     <input class="btn btn-dark btn-lg" name="search" type="submit" value="Wyszukaj">
 </form>
 {% endif %}
 
+{% endblock %}
+
+{% block footer %}
+<footer class="mastfoot mt-auto">
+    <div class="inner">
+      <p>Made by Agata Orzechowska</p>
+    </div>
+</footer>
 {% endblock %}

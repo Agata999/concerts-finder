@@ -5,7 +5,8 @@
 {% endblock %}
 
 {% block content %}
-<h2 class="cover-heading">Wkrótce zagrają dla Was</h2>
+</br>
+<h2 class="cover-heading">Najbliższe koncerty</h2>
 <table class="table table-striped table-dark">
   <thead>
     <tr>
@@ -25,8 +26,16 @@
     </tr>
     {% endfor %}
 </table>
-<p class="lead">
-    <a href="{% url 'choose-finder' %}" class="btn btn-lg btn-danger">Wyszukaj koncertu</a>
-</p>
 
+<p class="lead">
+    <a href="{% url 'choose-finder' %}" class="btn btn-lg btn-dark">Wyszukaj koncertu</a>
+</p>
+{% endblock %}
+
+{% block footer %}
+<footer class="mastfoot mt-auto">
+    <div class="inner">
+      <p>Made by Agata Orzechowska</p>
+    </div>
+</footer>
 {% endblock %}

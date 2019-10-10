@@ -4,10 +4,16 @@
 {% endblock %}
 
 {% block content %}
-<h1 class="cover-heading">Znajdź koncert</h1>
-<p>
-    <a class="btn btn-dark btn-lg btn-block" href="{% url 'artist-concerts-finder' %}" role="button">WG ARTYSTY</a>
-    <a class="btn btn-dark btn-lg btn-block" href="{% url 'band-concerts-finder' %}" role="button">WG ZESPOŁU</a>
-    <a class="btn btn-dark btn-lg btn-block" href="{% url 'date-concerts-finder' %}" role="button">WG DATY</a>
-</p>
+<h2 class="cover-heading">Znajdź koncert:</h2> </br>
+<p><a class="btn btn-dark btn-lg btn-block" href="{% url 'artist-concerts-finder' %}" role="button">WG ARTYSTY</a> </p>
+<p><a class="btn btn-dark btn-lg btn-block" href="{% url 'band-concerts-finder' %}" role="button">WG ZESPOŁU</a> </p>
+<p><a class="btn btn-dark btn-lg btn-block" href="{% url 'date-concerts-finder' %}" role="button">WG DATY</a> </p>
+{% endblock %}
+
+{% block footer %}
+<footer class="mastfoot mt-auto">
+    <div class="inner">
+      <p>Made by Agata Orzechowska</p>
+    </div>
+</footer>
 {% endblock %}

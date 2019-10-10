@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-<h3 class="cover-heading">{{concert.name}}</h3>
+<h3 class="cover-heading">{{concert.name}}</h3></br>
 <table class="table table-striped table-dark">
       <thead>
         <tr>
@@ -34,8 +34,8 @@
                   {% endfor %}
               {% endif %}
           </td>
-          <td><a class="btn btn-dark" href="{{ concert.facebook_page }}" role="button">Przejdź</a></td>
-           <td><a class="btn btn-danger" href="{% url 'realconcert-likes' concert.id %}" role="button">Lubię to!</a></td>
+          <td><a class="btn btn-primary" href="{{ concert.facebook_page }}" role="button">Facebook</a></td>
+           <td><a class="btn btn-dark" href="{% url 'realconcert-likes' concert.id %}" role="button">Lubię to!</a></td>
         </tr>
       </tbody>
 </table>
@@ -43,7 +43,7 @@
 <p class="lead">{{concert.description}}</p>
     <br>
 <p class="lead">
-  <a href="{% url 'main-page' %}" class="btn btn-lg btn-danger">Powrót do strony głównej</a>
+  <a href="{% url 'main-page' %}" class="btn btn-lg btn-dark">Powrót do strony głównej</a>
 </p>
 
 {% endblock %}
