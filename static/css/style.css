@@ -25,6 +25,10 @@ a:hover {
   height:540px;
 }
 
+.mb-header {
+  height: 500px;
+}
+
 /* Custom default button */
 .btn-secondary,
 .btn-secondary:hover,
