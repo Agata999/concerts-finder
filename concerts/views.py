@@ -210,9 +210,7 @@ class CityConcertsFinder(View):
 class TopConcerts(View):
     def get(self, request):
         concerts = RealConcert.objects.all().annotate(likes_count=Count("likes")).order_by("-likes_count")[:10]
-        numbers = [i for i in range(1,10)]
-        return render(request, "top_concerts.html", {"concerts": concerts,
-                                                     "numbers": numbers})
+        return render(request, "top_concerts.html", {"concerts": concerts})
 
 
 class ListOfDreamConcerts(View):

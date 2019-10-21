@@ -40,8 +40,6 @@ a:hover {
 }
 
 
-
-
 .messages {
   color: #cc1111;
   font-size: medium;
@@ -49,6 +47,10 @@ a:hover {
 
 .navbars {
   font-size: large;
+}
+
+.positions {
+  font-size: 25px;
 }
 
 /*
