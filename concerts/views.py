@@ -6,13 +6,26 @@ from django.views import View
 from django.db.models import Count
 from django.contrib import messages
 from .models import RealConcert, DreamConcert
-from .forms import SearchBandConcertsForm, SearchArtistConcertsForm, SearchDateConcertsForm, SearchDreamConcertForm, \
-    SearchCityConcertsForm, AddDreamConcertForm, UserForm, RegisterUserForm, ResetPasswordForm
+from .forms import (
+    SearchBandConcertsForm,
+    SearchArtistConcertsForm,
+    SearchDateConcertsForm,
+    SearchDreamConcertForm,
+    SearchCityConcertsForm,
+    AddDreamConcertForm,
+    UserForm,
+    RegisterUserForm,
+    ResetPasswordForm,
+)
 
 
 class LandingPage(View):
     def get(self, request):
-        samples = RealConcert.objects.all().annotate(likes_count=Count("likes")).order_by("-likes_count")[:3]
+        samples = (
+            RealConcert.objects.all()
+            .annotate(likes_count=Count("likes"))
+            .order_by("-likes_count")[:3]
+        )
         return render(request, "index.html", {"samples": samples})
 
 
@@ -50,9 +63,11 @@ class BandConcertsFinder(View):
             form = SearchBandConcertsForm()
             concerts = None
 
-        return render(request, 'band_concerts_finder.html', {"form": form,
-                                                             "concerts": concerts,
-                                                             "search": search})
+        return render(
+            request,
+            "band_concerts_finder.html",
+            {"form": form, "concerts": concerts, "search": search},
+        )
 
 
 class ArtistConcertsFinder(View):
@@ -72,7 +87,9 @@ class ArtistConcertsFinder(View):
                 if last_name:
                     concerts = concerts.filter(persons__last_name__icontains=last_name)
                 if artistic_name:
-                    concerts = concerts.filter(persons__artistic_name__icontains=artistic_name)
+                    concerts = concerts.filter(
+                        persons__artistic_name__icontains=artistic_name
+                    )
                 if city:
                     concerts = concerts.filter(city=city)
                 if start_date:
@@ -83,9 +100,11 @@ class ArtistConcertsFinder(View):
             form = SearchArtistConcertsForm()
             concerts = None
 
-        return render(request, 'artist_concerts_finder.html', {"form": form,
-                                                               "concerts": concerts,
-                                                               "search": search})
+        return render(
+            request,
+            "artist_concerts_finder.html",
+            {"form": form, "concerts": concerts, "search": search},
+        )
 
 
 class DateConcertsFinder(View):
@@ -110,39 +129,42 @@ class DateConcertsFinder(View):
             form = SearchDateConcertsForm()
             concerts = None
 
-        return render(request, 'date_concerts_finder.html', {"form": form,
-                                                             "concerts": concerts,
-                                                             "search": search})
+        return render(
+            request,
+            "date_concerts_finder.html",
+            {"form": form, "concerts": concerts, "search": search},
+        )
+
 
 class LoginView(View):
     def get(self, request):
         form = UserForm()
-        return render(request, 'login.html', {"form": form})
+        return render(request, "login.html", {"form": form})
 
     def post(self, request):
         form = UserForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('main-page')
+                return redirect("main-page")
             else:
-                messages.warning(request, 'Błędny login i/lub hasło')
-        return render(request, 'login.html', {'form': form})
+                messages.warning(request, "Błędny login i/lub hasło")
+        return render(request, "login.html", {"form": form})
 
 
 class LogoutView(View):
     def get(self, request):
         logout(request)
-        return redirect('main-page')
+        return redirect("main-page")
 
 
 class RegisterUserView(View):
     def get(self, request):
         form = RegisterUserForm()
-        return render(request, 'register_user.html', {"form": form})
+        return render(request, "register_user.html", {"form": form})
 
     def post(self, request):
         form = RegisterUserForm(request.POST)
@@ -152,23 +174,25 @@ class RegisterUserView(View):
             conf_password = form.cleaned_data["conf_password"]
             users = [user.username for user in User.objects.all()]
             if login in users:
-                messages.warning(request, 'Podany login jest już zajęty! Wymyśl inny')
-                return render(request, 'register_user.html', {'form': form})
+                messages.warning(request, "Podany login jest już zajęty! Wymyśl inny")
+                return render(request, "register_user.html", {"form": form})
             elif password != conf_password:
-                messages.warning(request, 'Podane hasła nie są identyczne! Spróbuj jeszcze raz')
-                return render(request, 'register_user.html', {'form': form})
+                messages.warning(
+                    request, "Podane hasła nie są identyczne! Spróbuj jeszcze raz"
+                )
+                return render(request, "register_user.html", {"form": form})
             User.objects.create_user(username=login, password=password)
-            return redirect('login')
+            return redirect("login")
 
 
 class LikeRealConcert(LoginRequiredMixin, View):
-    login_url = '/login/'
+    login_url = "/login/"
 
     def get(self, request, id):
         concert = get_object_or_404(RealConcert, id=id)
-        return render(request, 'like_real_concert.html', {"concert": concert})
+        return render(request, "like_real_concert.html", {"concert": concert})
 
-    def post (self, request, id):
+    def post(self, request, id):
         concert = get_object_or_404(RealConcert, id=id)
         user = request.user
         concert.likes.add(user)
@@ -178,7 +202,7 @@ class LikeRealConcert(LoginRequiredMixin, View):
 class ConcertDetails(View):
     def get(self, request, id):
         concert = get_object_or_404(RealConcert, id=id)
-        return render(request, 'concert-details.html', {"concert": concert})
+        return render(request, "concert-details.html", {"concert": concert})
 
 
 class CityConcertsFinder(View):
@@ -202,20 +226,30 @@ class CityConcertsFinder(View):
             form = SearchCityConcertsForm()
             concerts = None
 
-        return render(request, 'city_concerts_finder.html', {"form": form,
-                                                             "concerts": concerts,
-                                                             "search": search})
+        return render(
+            request,
+            "city_concerts_finder.html",
+            {"form": form, "concerts": concerts, "search": search},
+        )
 
 
 class TopConcerts(View):
     def get(self, request):
-        concerts = RealConcert.objects.all().annotate(likes_count=Count("likes")).order_by("-likes_count")[:10]
+        concerts = (
+            RealConcert.objects.all()
+            .annotate(likes_count=Count("likes"))
+            .order_by("-likes_count")[:10]
+        )
         return render(request, "top_concerts.html", {"concerts": concerts})
 
 
 class ListOfDreamConcerts(View):
     def get(self, request):
-        concerts = DreamConcert.objects.all().annotate(likes_count=Count("likes")).order_by("-likes_count")
+        concerts = (
+            DreamConcert.objects.all()
+            .annotate(likes_count=Count("likes"))
+            .order_by("-likes_count")
+        )
         return render(request, "list_of_dream_concerts.html", {"concerts": concerts})
 
 
@@ -241,19 +275,21 @@ class SearchDreamConcert(View):
             form = SearchDreamConcertForm()
             concerts = None
 
-        return render(request, 'search_dream_concert.html', {"form": form,
-                                                             "concerts": concerts,
-                                                             "search": search})
+        return render(
+            request,
+            "search_dream_concert.html",
+            {"form": form, "concerts": concerts, "search": search},
+        )
 
 
 class LikeDreamConcert(LoginRequiredMixin, View):
-    login_url = '/login/'
+    login_url = "/login/"
 
     def get(self, request, id):
         concert = get_object_or_404(DreamConcert, id=id)
-        return render(request, 'like_dream_concert.html', {"concert": concert})
+        return render(request, "like_dream_concert.html", {"concert": concert})
 
-    def post (self, request, id):
+    def post(self, request, id):
         concert = get_object_or_404(DreamConcert, id=id)
         user = request.user
         concert.likes.add(user)
@@ -268,15 +304,12 @@ class AddDreamConcert(View):
     def post(self, request):
         form = AddDreamConcertForm(request.POST)
         if form.is_valid():
-            city = form.cleaned_data['city']
-            person = form.cleaned_data['person']
-            band = form.cleaned_data['band']
+            city = form.cleaned_data["city"]
+            person = form.cleaned_data["person"]
+            band = form.cleaned_data["band"]
             p = DreamConcert.objects.create(city=city)
             if person:
                 p.persons.add(person)
             if band:
                 p.bands.add(band)
         return redirect("dreamconcert-likes", id=p.id)
-
-
-
